@@ -6,9 +6,11 @@ import (
 	"net/http"
 )
 
+// write ReadMe of this code in github format
 func Handlers() {
 
 	http.HandleFunc("/user", api.GetUserData)
+
 	http.HandleFunc("/forum", api.GetForumData)
 	http.HandleFunc("/message_forum", api.GetMessageForumData)
 	http.HandleFunc("/message", api.GetMessageData)
