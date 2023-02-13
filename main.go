@@ -7,6 +7,7 @@ import (
 )
 
 func Handlers() {
+
 	http.HandleFunc("/user", api.GetUserData)
 	http.HandleFunc("/forum", api.GetForumData)
 	http.HandleFunc("/message_forum", api.GetMessageForumData)
