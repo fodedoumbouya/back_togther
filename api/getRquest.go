@@ -7,6 +7,19 @@ import (
 	"net/http"
 )
 
+func GetAllUserData(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	data := GetAllUser()
+	res := model.Response{
+		Code:    200,
+		Message: "sucess",
+		Data:    data,
+	}
+
+	json.NewEncoder(w).Encode(res)
+}
+
 func GetUserData(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	var userData map[string]interface{}

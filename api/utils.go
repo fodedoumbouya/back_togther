@@ -5,6 +5,8 @@ import (
 	model "back_togther/structure"
 	"database/sql"
 	"fmt"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
@@ -24,6 +26,28 @@ var (
 
 func CheckError(err error) bool {
 	return err != nil
+}
+
+func GetAllUser() []model.Utilisateur {
+	userData := []model.Utilisateur{}
+	db, _ := sql.Open("mysql", conf.ConnectionParameters)
+	defer db.Close()
+	sql := fmt.Sprintf("select * from %v.utilisateur", conf.Mysql.DbName)
+	result, err := db.Query(sql)
+	if CheckError(err) {
+		fmt.Println("Check Error Failled: ", err)
+	}
+	for result.Next() {
+		result.Scan(&ID, &Nom, &Email, &Login, &Pwd)
+		userData = append(userData, model.Utilisateur{
+			Id:    ID,
+			Nom:   Nom,
+			Email: Email,
+			Login: Login,
+			Pwd:   Pwd,
+		})
+	}
+	return userData
 }
 
 func GetUser(login string) (bool, model.Utilisateur) {
